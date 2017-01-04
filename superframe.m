@@ -18,7 +18,6 @@ frame_size = round(rate * FRAME_DURATION); %bits
 %Calculation of the nb of data bits in a frame
 data_frame_size = frame_size - FEC_SIZE;
 %Calculation of the nb of data bits in a superframe
-data_superframe_size = data_frame_size * (NB_FRAMES_SUPERFRAME-5); %non data frames : 0;1;34;35;68
 
 %initialisation of the returned vector
 remaining_data = 0;
@@ -108,6 +107,7 @@ end
 
 %remaining data
 if end_data == 0
+    remaining_data = zeros(1, data_size-data_treated);
     for i = data_treated+1 : data_size
         remaining_data(i-data_treated)=data(i);
     end
