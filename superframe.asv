@@ -62,49 +62,13 @@ for nb_frame = 1 : 32
     superframe_vector = [superframe_vector frame(data_frame, FEC_SIZE) ];   
 end
 
-%------------------------------------%
-
-%-------------------------------------%
+%
 %frame 34 and 35
 superframe_vector = [superframe_vector frame34()];
 
 superframe_vector = [superframe_vector frame35()];
 
-%-------------------------------------%
 
-%-------------------------------------%
-%frame 36 to 67
-for nb_frame = 1 : 32  
-    %(re)set data_frame : temp buffer between data and frames
-    data_frame = zeros(1, data_frame_size);
-    
-    %have not reached the end of data -> put data in output vector
-    if end_data == 0   
-        data_frame_treated = 0;
-        while data_frame_treated < data_frame_size
-            %write data in a vector
-            if data_treated < data_size
-                data_frame(data_frame_treated+1) = data(data_treated+1);
-
-            %end of data
-            else
-                end_data = 1; %reach the end of data
-                for i = data_frame_treated+1 : data_frame_size
-                    data_frame(i) = 0;
-                end 
-                break
-            end
-
-            data_treated = data_treated + 1;
-            data_frame_treated = data_frame_treated + 1;        
-        end 
-    end
-    
-    %add data_frame in superframe, if end_data=1 -> only zeros.
-    superframe_vector = [superframe_vector frame(data_frame, FEC_SIZE) ];   
-end
-
-%--------------------------------------------------%
 
 %remaining data
 if end_data == 0
